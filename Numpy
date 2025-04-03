@@ -1,0 +1,7 @@
+# python-libraries
+This repository showcases a  syntax and the use cases of Numpy.
+#Numpy stands for numerical python
+# Numpy helps in doing mathematical operations on 1D and 2D arrays
+import numpy as np
+arr = np.array([12,21,34,43,45,54])
+print(arr)
