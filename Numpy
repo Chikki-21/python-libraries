@@ -1,7 +1,195 @@
-# python-libraries
-This repository showcases a  syntax and the use cases of Numpy.
-#Numpy stands for numerical python
-# Numpy helps in doing mathematical operations on 1D and 2D arrays
+# NumPy stands for Numerical Python
+# It helps in fast computation, uses less memory, and is great for handling large data
+
 import numpy as np
-arr = np.array([12,21,34,43,45,54])
+
+# 1. Basic NumPy Array Creation
+arr = np.array([12, 21, 34, 43, 45, 54])
 print(arr)
+
+# Specify data type and check properties
+myarr = np.array([[12, 3333, 44423, 6454]], np.int32)
+print(myarr)
+print(myarr[0, 1])  # Element at row 0, column 1
+print(myarr.shape)  # Shape: (rows, columns)
+print(myarr.dtype)  # Data type of elements
+myarr[0, 1] = 45  # Changing an element
+print(myarr)
+
+# Note: Prefer int or float for numerical operations in NumPy
+
+# 2. Array from Other Data Structures (like list, set)
+listarray = np.array([[12, 32], [33, 4534], [23, 665]], np.int64)
+print(listarray)
+print(listarray.shape)
+print(listarray.dtype)
+print(listarray.size)
+
+# Set gets converted but as 'object' type, not ideal for computation
+searr = np.array({23, 45})
+print(searr)
+print(searr.dtype)
+
+# 3. Array Creation Using Built-in NumPy Methods
+zeros = np.zeros((2, 3))  # Array of zeros
+print(zeros)
+
+any_value = np.full((2, 3), 88)  # Array filled with any value
+print(any_value)
+
+alike = np.full_like(zeros, 4)  # Same shape as another array, filled with 4
+print(alike)
+
+# 4. Random Number Arrays
+random = np.random.rand(4, 2)  # Random numbers between 0 and 1
+print(random)
+
+rand = np.random.random_sample(zeros.shape)  # Random values, shape from 'zeros' array
+print(rand)
+
+ri = np.random.randint(7, size=(3, 3))  # Random integers up to 7
+print(ri)
+
+ri2 = np.random.randint(4, 7, size=(3, 3))  # Random integers between 4 and 7
+print(ri2)
+
+# 5. Array Creation with Range and Linspace
+rng = np.arange(14)  # Array from 0 to 13
+print(rng)
+
+lspace = np.linspace(1, 50, 10)  # 10 evenly spaced numbers between 1 and 50
+print(lspace)
+
+# 6. Empty and Identity Arrays
+emp = np.empty((2, 3))  # Empty array (values uninitialized)
+print(emp)
+
+empty_like = np.empty_like(lspace)  # Empty array like 'lspace'
+print(empty_like)
+
+ide = np.identity(5)  # Identity matrix (square)
+print(ide)
+print(ide.shape)
+
+# 7. Reshaping Arrays
+arr = np.arange(99)
+print(arr)
+print(arr.reshape(3, 33))  # Reshape to 3 rows and 33 columns
+print(arr.ravel())  # Flatten the array back to 1D
+
+# 8. Working with Axis
+list = [[1, 2, 3], [4, 5, 6], [7, 1, 0]]
+ar = np.array(list)
+print(ar)
+print(ar.sum(axis=0))  # Sum along columns
+print(ar.sum(axis=1))  # Sum along rows
+print(ar.T)  # Transpose
+print(ar.flat)  # Flat iterator
+
+for item in ar.flat:
+    print(item)
+
+print(ar.ndim)  # Number of dimensions
+print(ar.nbytes)  # Total bytes consumed
+
+# 9. Useful Array Methods
+one = np.array([1, 22, 4, 6554], np.int64)
+print(one.argmax())  # Index of max element
+print(one.argmin())  # Index of min element
+print(one.argsort())  # Indices of sorted elements
+
+# Methods for 2D arrays
+print(ar.argmax())
+print(ar.argmin())
+print(ar.argmax(axis=0))
+print(ar.argmax(axis=1))
+print(ar.argsort(axis=0))
+print(ar.argsort(axis=1))
+
+# 10. Basic Matrix Operations
+ar2 = np.array([[1, 2, 3], [1, 2, 3], [3, 4, 5]])
+print(ar + ar2)  # Element-wise addition
+print(ar * ar2)  # Element-wise multiplication
+print(np.sqrt(ar2))  # Square root
+print(np.max(ar))
+print(ar.min())
+print(np.sum(ar))
+
+# Conditional operations
+print(np.where(ar > 5))  # Index of elements > 5
+print(np.nonzero(ar))  # Index of non-zero elements
+
+# 11. Comparing List vs NumPy Array Memory
+import sys
+py_list = [1, 2, 3, 4]
+np_ar = np.array([py_list])
+print(sys.getsizeof(1) * len(py_list))  # Size of Python list
+print(np_ar.itemsize * np_ar.size)  # Size of NumPy array
+
+# 12. Repeat Elements
+rar = np.array([[1, 2, 3]])
+r = np.repeat(rar, 3, axis=0)  # Repeat rows
+print(r)
+
+# 13. Accessing Array Elements
+a = np.array([[1, 2, 3], [3, 4, 5], [5, 6, 7]])
+print(a[0, :])  # First row
+print(a[:, 1])  # Second column
+print(a[0, 1:-1:2])  # Fancy slicing: Row 0, from index 1 to end-1, step 2
+
+# 14. Small Problem: Replace Center of Matrix
+one = np.ones((5, 5))
+print(one)
+zero = np.zeros((3, 3))
+print(zero)
+zero[1, 1] = 9  # Change center element
+print(zero)
+one[1:4, 1:4] = zero  # Insert small matrix inside big one
+print(one)
+
+# 15. Copying Arrays
+c = np.array([1, 2, 3])
+b = c.copy()
+b[0] = 100
+print(c, b)  # Original stays unchanged
+
+# 16. Mathematical Operations
+z = np.array([1, 2, 3])
+print(a + 2)
+print(a - 2)
+print(a * 2)
+print(a ** 2)
+print(np.sin(z))
+print(np.cos(z))
+
+# 17. Linear Algebra
+on = np.ones((2, 3))
+any = np.full((3, 2), 2)
+print(np.matmul(on, any))  # Matrix multiplication
+
+# 18. Stacking Arrays
+v1 = np.array([1, 2, 3])
+v2 = np.array([4, 5, 6])
+
+# Vertical stack
+v3 = np.vstack([v1, v2, v2])
+print(v3)
+
+# Horizontal stack
+v4 = np.hstack([v1, v1, v2])
+print(v4)
+
+# 19. Boolean Masking and Advanced Indexing
+print(v1[v1 > 0])  # Filter positive numbers
+print(v1 > 2)  # Boolean array
+v = np.array([11, 223, 3544], np.int32)
+print(v[[1, 2]])  # Indexing with list
+p = ((v > 10) & (v < 1000))  # Condition check
+print(p)
+
+# 20. Importing Data from Text File (commented since file is not available)
+'''
+filedata = np.loadtxt("name.txt", delimiter=",")
+filedata = filedata.astype('int32')  # Convert to int32
+print(filedata)
+'''
