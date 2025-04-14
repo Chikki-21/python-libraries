@@ -1,0 +1,206 @@
+# ===========================
+# 🖌️ Basic Plotting in Matplotlib
+# ===========================
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Generate random data
+x_data = np.random.randint(50)
+y_data = np.random.randint(50)
+
+# Scatter Plot (Single Point)
+plt.scatter(x_data, y_data)
+plt.show()
+
+# Scatter Plot (Multiple Points)
+X_data = np.random.random(50)
+Y_data = np.random.random(50)
+plt.scatter(X_data, Y_data)
+plt.show()
+
+# ===========================
+# 🎨 Styling Scatter Plots
+# ===========================
+
+plt.scatter(X_data, Y_data, c="blue", marker="*", s=150, alpha=0.3)
+plt.show()
+
+# ===========================
+# 📈 Line Plots
+# ===========================
+
+years = [2006 + x for x in range(10)]
+weights = [45, 44, 77, 12, 98, 67, 55, 65, 77, 100]
+
+plt.plot(years, weights)
+plt.show()
+
+# Custom Line Style
+plt.plot(years, weights, c="black", lw=3, linestyle="--")
+plt.show()
+
+# ===========================
+# 📊 Bar Charts
+# ===========================
+
+program_lang = ["C++", "Python", "Java", "C"]
+votes = [123, 221, 33, 90]
+
+plt.bar(program_lang, votes, color="red", align="edge", width=0.5, edgecolor="black", lw=5.0)
+plt.show()
+
+# ===========================
+# 📊 Histograms
+# ===========================
+
+ages = np.random.normal(20, 1.5, 1000)
+print(ages)
+
+plt.hist(ages, bins=20, cumulative=True)
+plt.show()
+
+# ===========================
+# 🥧 Pie Charts
+# ===========================
+
+lang = ["Python", "C++", "C", "C#", "Java"]
+vote = [120, 221, 45, 12, 21]
+
+plt.pie(vote, labels=lang)
+plt.show()
+
+# Custom Pie Chart
+exp = [0, 0.2, 0, 0, 0]
+plt.pie(vote, labels=lang, explode=exp, autopct="%.2f%%", pctdistance=1.5, startangle=120)
+plt.show()
+
+# ===========================
+# 📦 Box Plots
+# ===========================
+
+# Single Dataset
+heights = np.random.normal(172, 8, 300)
+print(heights)
+
+plt.boxplot(heights)
+plt.show()
+
+# Multiple Datasets
+first = np.linspace(0, 10, 25)
+second = np.linspace(10, 210, 25)
+third = np.linspace(200, 220, 25)
+fourth = np.linspace(250, 300, 25)
+
+data = np.concatenate((first, second, third, fourth))
+plt.boxplot(data)
+plt.show()
+
+# ===========================
+# 🛠️ Customizing Plots
+# ===========================
+
+year = [2004 + x for x in range(5)]
+income = [55, 20, 65, 78, 123]
+
+plt.plot(year, income)
+plt.title("Income of John", fontsize=25)
+plt.xlabel("Years")
+plt.ylabel("Income in USD")
+
+income_ticks = list(range(50, 130, 25))
+plt.yticks(income, [f"${items}K" for items in income])
+plt.show()
+
+plt.yticks(income_ticks, [f"${x}K" for x in income_ticks])
+plt.show()
+
+# ===========================
+# 🧩 Legends & Multiple Plots
+# ===========================
+
+stock_a = [21, 12, 33, 45, 56]
+stock_b = [15, 19, 54, 97, 63]
+stock_c = [33, 42, 98, 76, 1]
+
+plt.plot(stock_a, label="Company 1")
+plt.plot(stock_b, label="Company 2")
+plt.plot(stock_c, label="Company 3")
+
+plt.legend()  # Default top-left corner
+plt.show()
+
+# ===========================
+# 🖤 Using Styles
+# ===========================
+
+from matplotlib import style
+
+style.use("dark_background")
+plt.plot(stock_c, label="Company 3")
+plt.show()
+
+# ===========================
+# 🪞 Multiple Figures
+# ===========================
+
+x1, y1 = np.random.random(100), np.random.random(100)
+x2, y2 = np.arange(100), np.random.random(100)
+
+plt.figure(1)
+plt.scatter(x1, y1)
+
+plt.figure(2)
+plt.plot(x2, y2)
+plt.show()
+
+# ===========================
+# 🖼️ Subplots
+# ===========================
+
+x = np.arange(100)
+
+fig, axs = plt.subplots(2, 2)
+fig.suptitle("My Math Plots")
+
+axs[0, 0].plot(x, np.sin(x))
+axs[0, 0].set_title("Sine Wave")
+
+axs[0, 1].plot(x, np.cos(x))
+axs[0, 1].set_title("Cosine Wave")
+
+axs[1, 0].plot(x, np.random.random(100))
+axs[1, 0].set_title("Random Wave")
+
+axs[1, 1].plot(x, np.log(x))
+axs[1, 1].set_title("Logarithm")
+axs[1, 1].set_xlabel("Test")
+
+plt.show()
+
+# ===========================
+# 💾 Exporting Plots
+# ===========================
+
+# Use tight layout to remove overlaps
+# plt.tight_layout()
+
+# Save your figure
+# plt.savefig("My_math_plots.png", dpi=300, transparent=True)
+
+# ===========================
+# 🧭 3D Plotting
+# ===========================
+
+ax = plt.axes(projection="3d")
+
+x = np.random.random(100)
+y = np.random.random(100)
+z = np.random.random(100)
+
+ax.scatter(x, y, z)
+
+ax.set_xlabel("X-axis")
+ax.set_ylabel("Y-axis")
+ax.set_zlabel("Z-axis")
+plt.show()
