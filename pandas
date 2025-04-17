@@ -1,0 +1,251 @@
+
+# ----------------------------------------------
+# Pandas is a Python library used for data analysis and manipulation.
+# It helps to work easily with structured data like Excel, CSV, databases.
+# Think of Pandas like Excel + SQL + Python — but much faster and code-based.
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# -----------------------------------------------
+# 1. Series (Single Column)
+# -----------------------------------------------
+# Every column of DataFrame is internally a Series.
+values = [12, 34, 60, 70, 78]
+print(pd.Series(values))  # Default index
+print(pd.Series(values, index=['a', 'b', 'c', 'd', 'e']))  # Custom index
+
+# -----------------------------------------------
+# 2. DataFrame (Table: Rows + Columns)
+# -----------------------------------------------
+# A DataFrame is the main data structure in Pandas (like a full table).
+# Creating a DataFrame from a dictionary
+df = pd.DataFrame({"name": ["Mike", "Hassan", "Aditya"], "age": [30, 20, 56], "job": ["clerk", "programmer", "jobless"]})
+print(df)
+
+# Set 'name' column as the index
+df = df.set_index("name")
+print(df)
+
+# Reset the index (bring back serial numbers)
+df = df.reset_index()
+print(df)
+
+# -----------------------------------------------
+# 3. Adding Two DataFrames
+# -----------------------------------------------
+# If indexes match, addition is done row-wise.
+df1 = pd.DataFrame({"a": [10, 20, 30]})
+df2 = pd.DataFrame({"a": [1, 2, 3]})
+print(df1 + df2)
+
+# If indexes are shuffled, addition matches index
+df3 = pd.DataFrame({"a": [10, 20, 30]}, index=[0, 1, 2])
+df4 = pd.DataFrame({"a": [1, 2, 3]}, index=[1, 2, 0])
+print(df3 + df4)
+
+# -----------------------------------------------
+# 4. Exporting and Importing Data
+# -----------------------------------------------
+# Export DataFrame to CSV and JSON
+df.to_csv("Mydata.csv")
+df.to_csv("data.csv", index=None)  # Removes index column
+df.to_json("Dat.json")
+print(df.to_dict())
+
+# Import CSV file
+print(pd.read_csv("Mydata.csv"))
+
+# Read external dataset
+dt = pd.read_csv("E:/CODING AND DSA/Python/machine-readable-business-employment-data-dec-2024-quarter.csv")
+print(dt.head())  # First 5 rows
+print(dt.tail())  # Last 5 rows
+print(dt.sample())  # Random row
+print(dt.sample(10))  # 10 random rows
+
+# See all column names
+print(list(dt.columns))
+
+# Display only 5 columns in output
+pd.options.display.max_columns = 5
+print(dt)
+
+# Dataset Information
+dt.info()  # Summary (rows, columns, datatype)
+print(dt.describe())  # Statistics (mean, std, min, max)
+
+# Working with specific column
+print(dt['Period'])  # same as dt.Period
+print(dt['Period'].min())  # Other functions: max(), median(), mode(), count(), sum()
+
+# -----------------------------------------------
+# 5. Visualization
+# -----------------------------------------------
+# Plot a histogram of 'Period'
+dt['Period'].hist()
+plt.title("Period Distribution")
+plt.xlabel('Period')
+plt.ylabel('Count')
+plt.show()
+
+# Plot histogram for all columns
+dt.hist()
+plt.show()
+
+# -----------------------------------------------
+# 6. Stock Market Data (yfinance)
+# -----------------------------------------------
+# yfinance helps download stock/market data
+import yfinance as yf
+
+stock_data = yf.download("AAPL")  # Apple stock
+print(stock_data)
+stock_data.plot()
+plt.show()
+
+# -----------------------------------------------
+# 7. Working with Rows and Columns
+# -----------------------------------------------
+pt = pd.DataFrame({"name": ["abhi", "asish", "adil"], "age": [34, 56, 77], "job": ["clerk", "manager", "CEO"]})
+print(pt)
+
+# Access specific row by index
+print(pt.loc[0])
+
+# Set 'name' column as index
+pt = pt.set_index("name")
+
+# Access row by position
+print(pt.iloc[1])  # 1st row
+
+# Access specific value
+print(pt.at["adil", "age"])  # Using label
+print(pt.iat[2, 1])  # Using integer location
+
+# Modify a value
+pt.loc["abhi", "age"] = 11
+print(pt)
+
+# Modify whole row
+pt.loc["adil"] = [23, "cleaner"]
+print(pt)
+
+# Add new row
+pt.loc["yuktha"] = [89, "Teacher"]
+print(pt)
+
+# -----------------------------------------------
+# 8. Working on Entire Columns
+# -----------------------------------------------
+# Multiplying whole column
+pt['age'] = pt['age'] * 2
+print(pt)
+
+# -----------------------------------------------
+# 9. Functions on Data
+# -----------------------------------------------
+# Define a custom function
+def myfunction(x):
+    if x % 2 == 0:
+        return x ** 2
+    else:
+        return x // 2
+
+pf = pd.DataFrame({"a": [12, 23, 45], "b": [33, 45, 67], "c": [33, 34, 3]})
+
+# Apply function to column
+pf["a"] = pf["a"].apply(myfunction)
+print(pf)
+
+# -----------------------------------------------
+# 10. Dropping Rows/Columns
+# -----------------------------------------------
+# Drop a column
+pf = pf.drop("a", axis=1)  # axis=1 means columns
+print(pf)
+
+# Drop multiple columns
+pf = pf.drop(["c", "b"], axis=1)
+print(pf)
+
+# -----------------------------------------------
+# 11. Data Cleaning
+# -----------------------------------------------
+pg = pd.DataFrame({"v": [12, 23, 45], "h": [33, 45, 67], "m": [33, 34, 3]})
+
+# Introduce NaN (missing value)
+pg.at[1, "v"] = float("nan")
+print(pg)
+
+# Fill missing values with 0
+pg = pg.fillna(0)
+print(pg)
+
+# Drop rows with any NaN
+pg = pg.dropna()
+print(pg)
+
+# -----------------------------------------------
+# 12. Iterating through DataFrame
+# -----------------------------------------------
+# Column-wise iteration
+for col_name, col_data in pt.items():
+    print(f"Column: {col_name}, Data: {col_data.tolist()}")
+
+# Row-wise iteration
+for index, row in pt.iterrows():
+    print(f"Name: {index}, Age: {row['age']}, Job: {row['job']}")
+
+# -----------------------------------------------
+# 13. Filtering and Querying
+# -----------------------------------------------
+# Filter: People whose age is greater than 50
+print(pt[pt['age'] > 50])
+
+# Query method (alternative)
+print(pt.query('age > 50'))
+
+# -----------------------------------------------
+# 14. Slicing Data
+# -----------------------------------------------
+# Slicing rows
+print(pt[0:2])  # First 2 rows
+print(pt.iloc[1:3])  # Using iloc
+print(pt.loc["asish":"yuktha"])  # Using loc with labels
+
+# -----------------------------------------------
+# 15. Grouping Data
+# -----------------------------------------------
+# Group by job and calculate average age
+grouped = pt.groupby("job").mean()
+print(grouped)
+
+# -----------------------------------------------
+# 16. Sorting Data
+# -----------------------------------------------
+# Sort by age
+print(pt.sort_values("age"))
+
+# Sort by age in descending order
+print(pt.sort_values("age", ascending=False))
+
+# -----------------------------------------------
+# 17. Merging, Concatenating, Joining
+# -----------------------------------------------
+# Merging
+df1 = pd.DataFrame({"id": [1, 2, 3], "name": ["A", "B", "C"]})
+df2 = pd.DataFrame({"id": [1, 2, 3], "score": [90, 80, 70]})
+merged_df = pd.merge(df1, df2, on="id")
+print(merged_df)
+
+# Concatenating
+df3 = pd.DataFrame({"a": [1, 2], "b": [3, 4]})
+df4 = pd.DataFrame({"a": [5, 6], "b": [7, 8]})
+concatenated = pd.concat([df3, df4])
+print(concatenated)
+
+# Joining
+df5 = df1.set_index('id')
+df6 = df2.set_index('id')
+joined_df = df5.join(df6)
+print(joined_df)
